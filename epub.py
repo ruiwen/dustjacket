@@ -1,14 +1,21 @@
 import zipfile
+from lxml import etree
 
 class EPub:
 	# Wrapper class to manipulate ePub files
 	# Does not currently support creation of ePub files from scratch, only reading/manipulation.
 
 	# Internal reference to original filename
-	filename = ""
+	__filename = ""
 	
-	# Internal reference to ZipFile Object from given ePub
-	zipfile = None
+	# File reference pointer to original zip/epub file
+	__epub = None
+	
+	# Store the various namespaces
+	__namespaces = {}
+	
+	# OPF info
+	__opf = None
 
 	def __init__(self, filename):
 		# Initialiser.
@@ -19,10 +26,9 @@ class EPub:
 			if zipfile.is_zipfile(filename):
 				# Looks like we're valid! Time to get rolling
 				
-				self.filename = filename
-				self.zipfile = zipfile.ZipFile(filename, 'a')
-				
-				
+				self.__filename = filename
+				self.__epub = zipfile.ZipFile(filename, 'a')		
+									
 			else:
 				raise BadEpubException("%(filename)s seems like an invalid ePub. It is not a ZIP file." % {"filename": filename})
 				
