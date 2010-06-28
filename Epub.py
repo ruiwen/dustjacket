@@ -1,7 +1,7 @@
 import zipfile
 from lxml import etree
 
-class EPub:
+class Epub:
 	# Wrapper class to manipulate ePub files
 	# Does not currently support creation of ePub files from scratch, only reading/manipulation.
 
