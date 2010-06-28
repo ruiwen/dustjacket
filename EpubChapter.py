@@ -1,3 +1,5 @@
+from lxml import html
+
 class EpubChapter:
 	'''A single chapter in an EPub'''
 
@@ -15,8 +17,12 @@ class EpubChapter:
 	# Play order
 	play_order = 0
 
-	# Chapter contents from the contentfile
-	__content = ""
+	# Chapter contents from the contentfile read as a HTML tree
+	__content = None
+	
+	# List of paragraphs, each of an Element
+	__paragraphs = []
+	
 
 	def __init__(self, epub, idref, play_order, contentfile, label=""):
 		
@@ -25,10 +31,14 @@ class EpubChapter:
 		self.contentfile = contentfile
 		self.label = label		
 
-		self.__content = epub.open(contentfile).read()
+		self.__content = html.parse(epub.open(contentfile))
 		
 		
 
-
+	def __parse_paragraphs(self):
+		'''Parse the Chapter's contents to derive a list of text paragraphs making up the Chapter.'''
+		self.__paragraphs = self.__content.cssselect("p") # Select all the paragraphs via <p> tag
+		
+		
 			
 			
