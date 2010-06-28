@@ -6,9 +6,8 @@ class EpubChapter:
 	# The id used to reference this chapter as used in content.opf
 	idref = ""
 	
-	# The file holding the contents of this EpubChapter
-	# Expects a file-like object
-	contentfile = None
+	# The name of the file holding the contents of this EpubChapter
+	contentfile = ""
 	
 	# Chapter label
 	# Handy when displaying a "coverpage" for the chapter
