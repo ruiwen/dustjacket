@@ -22,6 +22,8 @@ class EpubChapter:
 	# List of paragraphs, each of an Element
 	__paragraphs = []
 	
+	# Paragraph title
+	__title = ""
 
 	def __init__(self, epub, idref, play_order, contentfile, label=""):
 		
@@ -38,6 +40,7 @@ class EpubChapter:
 		'''Parse the Chapter's contents to derive a list of text paragraphs making up the Chapter.'''
 		self.__paragraphs = self.__content.cssselect("p") # Select all the paragraphs via <p> tag
 		
-		
+		# Attempt to derive the title of the Chapter, most often found in the first <h2> tag
+		self.__title = self.__content.cssselect("h2")[0].text_content()
 			
 			
