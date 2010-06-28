@@ -44,7 +44,7 @@ class EpubToc:
 			l = rt.findtext("//{%(tocns)s}text" % {'tocns': self.__namespaces['ncx']}) # Label text			
 			c = rt.find("//{%(tocns)s}content" % {'tocns':self.__namespaces['ncx']}).attrib['src'] # Content
 			if has_oebps:
-				c = "OEBPS/" + src
+				c = "OEBPS/" + c
 				
 			self.chapters.append(EpubChapter(epub, p.attrib['id'], p.attrib['playOrder'], c, l))
 	
