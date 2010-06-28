@@ -1,3 +1,5 @@
+from Exceptions import BadEpubException
+from EpubToc import EpubToc
 import zipfile
 from lxml import etree
 
@@ -14,8 +16,11 @@ class Epub:
 	# Store the various namespaces
 	__namespaces = {}
 	
-	# OPF info
+	# OPF info - An lxml Element
 	__opf = None
+	
+	# Table of Contents
+	__toc = None
 
 	def __init__(self, filename):
 		# Initialiser.
@@ -34,6 +39,7 @@ class Epub:
 				
 		except BadEpubException as e:	
 			print unicode(e)
+
 
 	def __read_opf(self):
 
@@ -56,6 +62,11 @@ class Epub:
 		except AttributeError as e:
 			raise BadEpubException("%(filename)s doesn't seem like a valid ePub file. Unable to determine default namespace." % {'filename':filename})			
 
+
+	def __read_toc(self):
+		'''Construct the table of contents for this epub'''
+		self.__toc = EpubToc(self.__epub)
+	
 
 	def get_metainfo(self, info):
 		# Retrieve metainformation from the ePub
@@ -95,6 +106,13 @@ class Epub:
 		# Convenience method/attribute equivalent to self.get_metainfo('publisher')		
 		return self.get_metainfo("publisher")	
 
+
+	@property
+	def toc(self):
+		if not self.__toc:
+			self.__read_toc()
+			
+		return self.__toc
 
 	
 	def get_namespace(self, name):
