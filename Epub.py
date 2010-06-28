@@ -110,8 +110,7 @@ class Epub:
 		return self.filename
 
 	def __unicode__(self):
-		return self.filename
-
+		return "%(title)s - %(creator)s - %(identifier)" % {'title':self.title, 'creator':self.creator, 'identifier':self.identifier}
 
 
 			
