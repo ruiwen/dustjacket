@@ -65,7 +65,7 @@ class Epub:
 
 	def __read_toc(self):
 		'''Construct the table of contents for this epub'''
-		self.__toc = EpubToc(self.__epub)
+		self.__toc = EpubToc(self)
 	
 	
 	def open(self, name, **kwargs):
