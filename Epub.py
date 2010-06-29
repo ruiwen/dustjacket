@@ -67,6 +67,14 @@ class Epub:
 		'''Construct the table of contents for this epub'''
 		self.__toc = EpubToc(self.__epub)
 	
+	
+	def open(self, name, **kwargs):
+		'''Epub.open() masquerades and passes through to the original epub zipfile.'''
+		# I'm not quite sure if this is a good idea, but here goes anyway...
+		return self.__epub.open(name, **kwargs)
+	
+	
+	
 
 	def get_metainfo(self, info):
 		# Retrieve metainformation from the ePub
