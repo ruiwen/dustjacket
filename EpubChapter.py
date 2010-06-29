@@ -8,11 +8,7 @@ class EpubChapter:
 	
 	# The name of the file holding the contents of this EpubChapter
 	contentfile = ""
-	
-	# Chapter label
-	# Handy when displaying a "coverpage" for the chapter
-	label = ""
-	
+		
 	# Play order
 	play_order = 0
 
@@ -23,14 +19,14 @@ class EpubChapter:
 	__paragraphs = []
 	
 	# Paragraph title
-	__title = ""
+	title = ""
 
-	def __init__(self, epub, idref, play_order, contentfile, label=""):
+	def __init__(self, epub, idref, play_order, contentfile, title=""):
 		
 		self.idref = idref
 		self.play_order = play_order
 		self.contentfile = contentfile
-		self.label = label		
+		self.title = title	
 
 		self.__content = html.parse(epub.open(contentfile))
 		
