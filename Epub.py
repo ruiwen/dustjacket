@@ -74,6 +74,16 @@ class Epub:
 		return self.__epub.open(name, **kwargs)
 	
 	
+	def get_opf_data(self, tag):
+		'''Returns the ElementTree in the OPF file that matches the tag specified.'''
+		
+		if self.__opf is None: # Make sure self.__opf exists
+			self.__read_opf()
+		
+		try:		
+			return self.__opf.getroottree().find("//{%(opfns)s}%(tag)s" % {'opfns': self.__namespaces['opf']['package'], 'tag':tag }).getroottree()
+		except AttributeError:
+			return None
 	
 
 	def get_metainfo(self, info):
