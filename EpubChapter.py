@@ -34,7 +34,10 @@ class EpubChapter:
 
 	def __parse_paragraphs(self):
 		'''Parse the Chapter's contents to derive a list of text paragraphs making up the Chapter.'''
-		self.__paragraphs = self.__content.cssselect("p") # Select all the paragraphs via <p> tag
+		
+		cr = self.__content.getroot() # Get the content root Element
+		
+		self.__paragraphs = cr.cssselect("p") # Select all the paragraphs via <p> tag
 		
 		# Attempt to derive the title of the Chapter, most often found in the first <h2> tag
 		self.__title = self.__content.cssselect("h2")[0].text_content()
