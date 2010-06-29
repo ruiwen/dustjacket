@@ -45,3 +45,29 @@ class EpubChapter:
 			self.title = cr.cssselect("h2")[0].text_content()
 			
 			
+	
+	def get_original_text(self):
+		'''Returns the original HTML content of a Chapter'''
+		if self.__content is not None:
+			return html.tostring(self.__content)
+		else:
+			return ""
+
+						
+			
+	def get_paragraph_text(self, full_body=False):
+		'''Returns a long string comprising the HTML making up the paragraphs of the chapter, wrapped in <p> tags, delineated by newline characters.'''
+		out = []
+		
+		if not self.__paragraphs:
+			self.__parse_paragraphs()
+		
+		for p in self.__paragraphs:
+			out.append(html.tostring(p))		
+					
+		fragment = html.fragment_fromstring(u"\n".join(out), create_parent='div') # Wrap the <p>'s in a <div>
+		
+		if full_body:
+			return html.document_fromstring(html.tostring(fragment))
+		else:
+			return fragment
