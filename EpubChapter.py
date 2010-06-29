@@ -40,6 +40,8 @@ class EpubChapter:
 		self.__paragraphs = cr.cssselect("p") # Select all the paragraphs via <p> tag
 		
 		# Attempt to derive the title of the Chapter, most often found in the first <h2> tag
-		self.__title = self.__content.cssselect("h2")[0].text_content()
+		# It's a rough heuristic to determine the chapter title, but hey, something is better than nothing
+		if self.title == "":
+			self.title = cr.cssselect("h2")[0].text_content()
 			
 			
