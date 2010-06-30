@@ -99,7 +99,11 @@ class Epub:
 			self.__namespaces['opf'].update({'dc': meta.nsmap['dc']})
 
 		# Retrieve the information
-		return meta.findtext("{%(dcns)s}%(info)s" % {'dcns': self.__namespaces['opf']['dc'], 'info': info})
+		res = meta.findtext("{%(dcns)s}%(info)s" % {'dcns': self.__namespaces['opf']['dc'], 'info': info})
+		if res is not None:
+			return res
+		else:
+			return ""
 		
 	
 	@property

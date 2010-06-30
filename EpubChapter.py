@@ -27,7 +27,9 @@ class EpubChapter:
 		self.idref = idref
 		self.play_order = play_order
 		self.contentfile = contentfile
-		self.title = title	
+		
+		if title:
+			self.title = title
 
 		self.__content = html.parse(epub.open(contentfile))
 		
@@ -42,8 +44,11 @@ class EpubChapter:
 		
 		# Attempt to derive the title of the Chapter, most often found in the first <h2> tag
 		# It's a rough heuristic to determine the chapter title, but hey, something is better than nothing
-		if self.title == "":
-			self.title = cr.cssselect("h2")[0].text_content()
+		try:
+			if self.title == "":
+				self.title = cr.cssselect("h2")[0].text_content()
+		except IndexError:
+			pass # Oh well, looks like trying to determine the chapter title failed
 			
 			
 	
