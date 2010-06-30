@@ -70,20 +70,20 @@ class EpubToc:
 		'''Special parsing mode for Calibre-generated ePubs that don't adhere to sticking files in OEBPS/.'''
 		
 		# This is an ugly hack, I'm sorry.
-		# Calibre-generated ePubs seem to have toc.ncx's that are somewhat sparse, with <spine> in content.opf more complete instead.
-		# So let's parse <spine>				
-		spine = epub.get_opf_data("spine") # Get the <spine> ElementTree
+		# Calibre-generated ePubs seem to have toc.ncx's that are somewhat sparse, with <manifest> in content.opf more complete instead.
+		# So let's parse <manifest>				
+		#spine = epub.get_opf_data("spine") # Get the <spine> ElementTree
 		manifest = epub.get_opf_data("manifest") # Get the <manifest> ElementTree
 		
 		ns = ""
-		if spine is not None:
-			ns = spine.getroot().nsmap[None]
+		if manifest is not None:
+			ns = manifest.getroot().nsmap[None]
 		else:
 			raise BadEpubException("Unable to namespace of ebook spine.")
 			
 			
 		# Parse xhtml/xml items in the manifest
-		items = manifest.findall("{%(ns)s}item[@media-type='application/xhtml+xml']" % {'ns': ns})
+		items = manifest.findall("//{%(ns)s}item[@media-type='application/xhtml+xml']" % {'ns': ns})
 		for idx, i in enumerate(items):
 			self.chapters.append(EpubChapter(epub, i.attrib['id'], idx, i.attrib['href']))
 		
