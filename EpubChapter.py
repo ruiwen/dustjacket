@@ -1,4 +1,5 @@
 from lxml import html
+import json
 
 class EpubChapter:
 	'''A single chapter in an EPub'''
@@ -68,6 +69,6 @@ class EpubChapter:
 		fragment = html.fragment_fromstring(u"\n".join(out), create_parent='div') # Wrap the <p>'s in a <div>
 		
 		if full_body:
-			return html.document_fromstring(html.tostring(fragment))
+			return html.tostring(html.document_fromstring(html.tostring(fragment)))
 		else:
-			return fragment
+			return html.tostring(fragment)
