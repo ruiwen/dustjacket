@@ -56,7 +56,6 @@ class EpubToc:
 
 		# Parse the chapters
 		npoints = self.__toc.findall("//{%(tocns)s}navPoint" % {'tocns': self.__namespaces['ncx']})
-		print npoints
 		for p in npoints:					
 			#rt = p.getroottree()
 			title = p.findtext("{%(tocns)s}text" % {'tocns': self.__namespaces['ncx']}) # Label text			
